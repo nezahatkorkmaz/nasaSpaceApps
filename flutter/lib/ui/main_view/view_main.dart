@@ -3,12 +3,9 @@ import 'package:deneme/constants/app_color.dart';
 import 'package:deneme/constants/strings.dart';
 import 'package:deneme/ui/bee_view/view_bee.dart';
 import 'package:deneme/ui/home_view/view_home.dart';
-import 'package:deneme/ui/home_view/vm_home.dart';
 import 'package:deneme/ui/main_view/vm_main.dart';
 import 'package:deneme/ui/person_view/view_person.dart';
-import 'package:deneme/widgets/text_basic.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 final class ViewMain extends StatefulWidget {
   @override

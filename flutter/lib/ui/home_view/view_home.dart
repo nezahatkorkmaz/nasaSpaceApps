@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:deneme/constants/app_color.dart';
 import 'package:deneme/constants/strings.dart';
 import 'package:deneme/ui/chat_veiw/view_chat.dart';
@@ -5,6 +7,8 @@ import 'package:deneme/ui/home_view/vm_home.dart';
 import 'package:deneme/widgets/button_basic.dart';
 import 'package:deneme/widgets/text_basic.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -21,6 +25,37 @@ class ViewHome extends StatefulWidget {
 class _ViewHomeState extends State<ViewHome> {
   VmHome vmHome = Get.put(VmHome());
   late GoogleMapController mapController;
+  final gemini = Gemini.instance;
+//  String? advice;
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   trainBot();
+  // }
+
+  // void trainBot() async {
+  //   // JSON dosyasını okuma
+  //   String jsonString =
+  //       await rootBundle.loadString('assets/jsons/prompts.json');
+  //   print("-------------------00");
+
+  //   // JSON verisini çözümleme
+  //   final jsonResponse = json.decode(jsonString);
+
+  //   print(jsonResponse.toString());
+  //   await gemini
+  //       .text(String.fromEnvironment(
+  //           jsonResponse["system_prompt"]["description"]))
+  //       .then(
+  //     (value) {
+  //       print(jsonResponse["system_prompt"]["description"]);
+  //       advice = value?.content?.parts?.last.text;
+  //       setState(() {});
+  //     },
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -98,7 +133,7 @@ class _ViewHomeState extends State<ViewHome> {
                 () => GoogleMap(
                   zoomControlsEnabled: false,
                   //mapType: MapType.satellite,
-                  // markers: vmHome.markers,
+                  //  markers: vmHome.markers,
                   onMapCreated: (controller) {
                     setState(() {
                       mapController = controller;

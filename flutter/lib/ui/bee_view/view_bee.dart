@@ -1,203 +1,156 @@
 import 'package:deneme/constants/app_color.dart';
 import 'package:deneme/constants/strings.dart';
 import 'package:deneme/ui/bee_view/vm_bee.dart';
+import 'package:deneme/widgets/chart.dart';
 import 'package:deneme/widgets/text_basic.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class ViewBee extends StatelessWidget {
+class ViewBee extends StatefulWidget {
   const ViewBee({super.key});
 
   @override
+  State<ViewBee> createState() => _ViewBeeState();
+}
+
+class _ViewBeeState extends State<ViewBee> {
+  late GoogleMapController mapController;
+
+  @override
   Widget build(BuildContext context) {
-    VmBee vmBee = VmBee();
+    VmBee vmBee = Get.put(VmBee());
+
     return SingleChildScrollView(
         child: Column(
       children: [
+        _map(context, vmBee),
         Column(
           children: [
-            Container(
-              height: MediaQuery.sizeOf(context).height * .5,
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ExpansionTile(
-                      backgroundColor: AppColor().lightYellow,
-                      collapsedBackgroundColor: AppColor().darkYellow,
-                      title: TextBasic(text: "HIVE 1"),
-                      children: [
-                        _beeCard(vmBee, 0),
-                        _beeCard(vmBee, 1),
-                      ],
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextBasic(
+                        text: "HIVE 1",
+                        color: AppColor().white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ExpansionTile(
-                      backgroundColor: AppColor().lightYellow,
-                      collapsedBackgroundColor: AppColor().darkYellow,
-                      title: TextBasic(text: "HIVE 2"),
-                      children: [
-                        _beeCard(vmBee, 2),
-                        _beeCard(vmBee, 3),
-                      ],
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .45,
+                      height: MediaQuery.sizeOf(context).height * .3,
+                      child:
+                          MyBarChart(vmBee.beeValue[vmBee.selectedBee.value]!),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ExpansionTile(
-                      backgroundColor: AppColor().lightYellow,
-                      collapsedBackgroundColor: AppColor().darkYellow,
-                      title: TextBasic(text: "HIVE 3"),
-                      children: [
-                        _beeCard(vmBee, 0),
-                        _beeCard(vmBee, 1),
-                      ],
+                  ],
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextBasic(
+                        text: "HIVE 2",
+                        color: AppColor().white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .40,
+                      height: MediaQuery.sizeOf(context).height * .3,
+                      child:
+                          MyBarChart(vmBee.beeValue[vmBee.selectedBee.value]!),
+                    ),
+                  ],
+                )
+              ],
             ),
-
-            // Row(
-            //   children: [
-            //     _beeCard(vmBee, 0),
-            //     _beeCard(vmBee, 1),
-            //   ],
-            // ),
-            // Row(
-            //   children: [
-            //     _beeCard(vmBee, 2),
-            //     _beeCard(vmBee, 3),
-            //   ],
-            // )
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextBasic(
+                        text: "HIVE 3",
+                        color: AppColor().white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .45,
+                      height: MediaQuery.sizeOf(context).height * .3,
+                      child:
+                          MyBarChart(vmBee.beeValue[vmBee.selectedBee.value]!),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextBasic(
+                        text: "HIVE 4",
+                        color: AppColor().white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * .40,
+                      height: MediaQuery.sizeOf(context).height * .3,
+                      child:
+                          MyBarChart(vmBee.beeValue[vmBee.selectedBee.value]!),
+                    ),
+                  ],
+                )
+              ],
+            )
           ],
-        ),
-        _beesDetail(vmBee),
+        )
       ],
     ));
   }
 
-  Widget _beeCard(VmBee vmBee, int index) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: () {
-          vmBee.selectedBee.value = index;
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              color: AppColor().lightYellow,
-              borderRadius: BorderRadius.circular(16)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
-              "assets/images/bee-marker.png",
-              height: 32,
+  Widget _map(BuildContext context, VmBee vmBee) {
+    return SizedBox(
+      width: double.infinity,
+      height: MediaQuery.sizeOf(context).height * .45,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Obx(
+            () => GoogleMap(
+              zoomControlsEnabled: false,
+              //mapType: MapType.satellite,
+              markers: vmBee.markers.value,
+              onMapCreated: (controller) {
+                setState(() {
+                  mapController = controller;
+                });
+              },
+
+              // ignore: invalid_use_of_protected_member
+              //polygons: vmHome.polygons.value,
+              initialCameraPosition: CameraPosition(
+                target: vmBee.center,
+                zoom: 15,
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _beesDetail(VmBee vmBee) {
-    return Obx(
-      () => Container(
-        decoration: BoxDecoration(
-            color: AppColor().lightYellow,
-            borderRadius: BorderRadius.circular(16)),
-        width: double.infinity,
-        child: Column(
-          children: [
-            _coloredBar(
-              title: "Battery",
-              value: vmBee.beeValue[vmBee.selectedBee.value]![0] * 1.0,
-            ),
-            _coloredBar(
-                title: AppStrings().ph,
-                value: vmBee.beeValue[vmBee.selectedBee.value]![1] * 1.0),
-            _coloredBar(
-                title: AppStrings().calcium,
-                value: vmBee.beeValue[vmBee.selectedBee.value]![2] * 1.0),
-            _coloredBar(
-                title: AppStrings().humidity,
-                value: vmBee.beeValue[vmBee.selectedBee.value]![3] * 1.0),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _coloredBar({required title, required double value}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          SizedBox(
-              width: 72,
-              child: TextBasic(
-                text: title,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              )),
-          const SizedBox(
-            width: 16,
-          ),
-          Expanded(
-            child: Container(
-              width: 200, // Barın genişliği
-              height: 20, // Barın yüksekliği
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                color: Colors.grey[300], // Barın arka plan rengi
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: SizedBox(
-                width: value * 3, // Barın genişliği
-                height: 20, // Barın yüksekliği
-                child: Container(
-                    decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: const LinearGradient(
-                    colors: [Colors.red, Colors.green],
-                    stops: [0.0, 1.0],
-                  ),
-                )),
-              ),
-
-              //  Stack(
-              //   children: [
-              //     Container(
-              //       width: 300, // Barın genişliği
-              //       height: 30, // Barın yüksekliği
-              //       child: Container(
-              //           decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(10),
-              //         gradient: const LinearGradient(
-              //           colors: [Colors.red, Colors.green],
-              //           stops: [0.0, 1.0],
-              //         ),
-              //       )),
-              //     ),
-              //     Align(
-              //       alignment: Alignment.centerRight,
-              //       child: Container(
-              //         decoration: BoxDecoration(
-              //           borderRadius: BorderRadius.circular(10),
-              //           color: AppColor().white,
-              //         ),
-
-              //         width: vmBee.value.value * 1, // Barın genişliği
-              //         height: 30, // Barın yüksekliği),)],
-              //       ),
-              //     ),
-              //   ],
-              // ),
-            ),
-          )
-        ],
       ),
     );
   }

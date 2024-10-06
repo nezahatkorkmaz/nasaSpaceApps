@@ -7,6 +7,7 @@ class AppStrings {
   final String phosphorus = "Phosphorus";
   final String talkWithAI =
       "The humidity level is low in the red zone in your field. Watering is recommended. ";
-      final String personName="Nemo TEAM";
-      final String personTitle="Future of Next Gen";
+  final String personName = "Nemo TEAM";
+  final String personTitle = "Future of Next Gen";
+  final String battary = "Battery";
 }

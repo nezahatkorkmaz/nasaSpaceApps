@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
 // class TranslateScreen extends StatefulWidget {
@@ -135,18 +138,15 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   final gemini = Gemini.instance;
-  String initialPrompt = "I want you to impersonate William Shakespeare. "
-      "Analyze William Shakespeare's personality and answer questions as if you were William Shakespeare. "
-      "Here are the rules you should pay attention to: 1- Answers should contain no more than 20 words. "
-      "2- You should write messages that will keep the user in the chat as much as possible.";
+  String? initialPrompt;
 
   List<ChatMessage> messages = <ChatMessage>[
     ChatMessage(
-      text: 'Hey!',
+      text: 'How Can Help you...',
       user: ChatUser(
         id: '2',
-        firstName: 'William',
-        lastName: 'Shakespeare',
+        firstName: 'Nemo',
+        lastName: 'ChatBot',
       ),
       createdAt: DateTime.now(),
     ),
@@ -159,14 +159,24 @@ class _ChatState extends State<Chat> {
   }
 
   void trainBot() async {
-    await gemini.text(initialPrompt);
+    // JSON dosyasını okuma
+    String jsonString =
+        await rootBundle.loadString('assets/jsons/prompts.json');
+
+    // JSON verisini çözümleme
+    final jsonResponse = json.decode(jsonString);
+    initialPrompt =
+        String.fromEnvironment(jsonResponse["system_prompt"]["description"]);
+    print(jsonResponse.toString());
+    await gemini.text(
+        String.fromEnvironment(jsonResponse["system_prompt"]["description"]));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Basic example'),
+        title: const Text('Nemo Chat Bot'),
       ),
       body: DashChat(
         currentUser: ChatUser(
@@ -180,7 +190,7 @@ class _ChatState extends State<Chat> {
           });
 
           await gemini
-              .text("$initialPrompt\nUser: ${m.text}\nWilliam:")
+              .text("$initialPrompt\nUser: ${m.text}\n Nemo:")
               .then((value) {
             messages.insert(
               0,
@@ -188,8 +198,8 @@ class _ChatState extends State<Chat> {
                 text: value?.content?.parts?.last.text ?? "i forgot",
                 user: ChatUser(
                   id: '2',
-                  firstName: 'William',
-                  lastName: 'Shakespeare',
+                  firstName: 'Nemo',
+                  lastName: 'ChatBot',
                 ),
                 createdAt: DateTime.now(),
               ),
