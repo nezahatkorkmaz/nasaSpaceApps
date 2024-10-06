@@ -46,7 +46,7 @@ def load_questions_from_json(json_path):
 # Ana fonksiyon
 if __name__ == "__main__":
     # Soruların bulunduğu JSON dosyasını yükleyelim
-    questions_file = "/kaggle/input/adsfghj/vqa_questions.json"  # Soruların bulunduğu JSON dosyasının adı
+    questions_file = "vqa_questions.json"  # Soruların bulunduğu JSON dosyasının adı 
 
     # JSON dosyasından soruları ve görüntüleri okuyalım
     questions = load_questions_from_json(questions_file)
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     # Her kategorideki soruları görüntü ile eşleştirip cevap alalım
     for category in questions:
         for item in category["questions"]:  # Kategorilerdeki sorular listesine erişiyoruz
-            image_path = '/kaggle/input/adsfghj/grasshopper.PNG'  # Tek bir resim dosyası kullanıyorsanız sabit atama yapılabilir
+            image_path = 'grasshopper.PNG'  # Tek bir resim dosyası kullanıyorsanız sabit atama yapılabilir
             question = item["question"]
 
             # Sonucu alalım
