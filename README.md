@@ -1,4 +1,4 @@
-# NEMO AgriBee: Invasive Locust Protection & AI-Based Smart Agriculture System
+# NEMO AgriBee: AI-Based Smart Agriculture System
 
 ## High-Level Summary
 **AgriBee** is an AI-powered agricultural system designed to enhance agricultural productivity and optimize water management using UAV (Unmanned Aerial Vehicle) technologies. The system consists of hive-shaped bases mounted on four towers. These bases allow the UAVs to return for charging and monitor the fields to collect data. The collected data is used to detect agricultural needs and automatically analyze irrigation requirements. Additionally, the system tracks the vitamin and mineral needs of the plants, providing intelligent suggestions to farmers. Equipped with real-time data analysis and image processing techniques, AgriBee provides instant information on crucial agricultural factors like soil moisture levels and mineral balance. The Visual Question Answering (VQA) system allows users to ask questions based on the data collected by the UAVs, providing direct answers.
