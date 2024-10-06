@@ -59,41 +59,58 @@ Stations are equipped with **Qi wireless charging technology**. Drones autonomou
 If an increase in moisture is detected in one area, AgriBee will recognize this as an anomaly and deploy the bee-themed UAVs to investigate. The VQA system will answer questions like:
 - "Is there a flood in the area?" (Answer: Yes or No)
 - "Are there animals in the area?" (Answer: Yes or No)
+---
 
-## Monitoring Application Features:
+### Monitoring Application Features:
 Below are the important agricultural factors that can be monitored through AgriBee’s system:
 
 1. **Soil Moisture**  
-   - *Data Source:* SMAP  
-   - *Importance:* Helps analyze the water retention capacity of the soil and determine irrigation needs.
+   - **Data Source:** SMAP (Soil Moisture Active Passive)  
+   - **Importance:** Helps analyze the water retention capacity of the soil and determine irrigation needs.
 
 2. **Precipitation Data**  
-   - *Data Source:* IMERG  
-   - *Importance:* Useful for water management and irrigation planning.
+   - **Data Source:** IMERG (Integrated Multi-satellite Retrievals for GPM)  
+   - **Importance:** Useful for water management and irrigation planning.
 
 3. **Temperature and Heatwaves**  
-   - *Data Source:* MODIS, ECOSTRESS  
-   - *Importance:* Temperature extremes directly affect plant growth and need to be monitored.
+   - **Data Source:** MODIS, ECOSTRESS  
+   - **Importance:** Temperature extremes directly affect plant growth and need to be monitored.
 
 4. **Vegetation Health (NDVI)**  
-   - *Data Source:* MODIS, VIIRS  
-   - *Importance:* Helps optimize planting and harvest timing by tracking plant health.
+   - **Data Source:** MODIS, VIIRS  
+   - **Importance:** Helps optimize planting and harvest timing by tracking plant health.
 
 5. **Water Bodies and Resources**  
-   - *Data Source:* SWOT, Landsat  
-   - *Importance:* Tracks nearby water sources to manage water resources effectively.
+   - **Data Source:** SWOT, Landsat  
+   - **Importance:** Tracks nearby water sources to manage water resources effectively.
 
 6. **Drought and Flood Risk**  
-   - *Data Source:* Landsat, MODIS, SAR  
-   - *Importance:* Helps manage agricultural risk by tracking droughts and floods.
+   - **Data Source:** Landsat, MODIS, SAR  
+   - **Importance:** Helps manage agricultural risk by tracking droughts and floods.
 
-## Use of Artificial Intelligence
-AgriBee uses AI algorithms to analyze data collected from drones. Machine learning models predict soil moisture levels and plant health, providing smart recommendations for irrigation and fertilization. The VQA system enhances the user experience by allowing them to ask visual questions and receive real-time answers based on drone data. 
+### Space Agency Data
+AgriBee leverages data from various space agency sources, particularly NASA, to monitor environmental conditions and optimize irrigation and resource management in agricultural fields. Here are the main space data sources used:
 
-The system uses NASA’s data sources, such as MODIS and SMAP, to optimize irrigation and monitor environmental changes in agricultural fields.
+1. **SMAP (Soil Moisture Active Passive):**  
+   SMAP data helps monitor soil moisture levels, which are critical for understanding water retention capacity and planning irrigation strategies.
 
-## Space Agency Data
-N/A
+2. **IMERG (Integrated Multi-satellite Retrievals for GPM):**  
+   IMERG provides data on precipitation patterns, allowing for better water management and irrigation planning based on rainfall forecasts.
+
+3. **MODIS (Moderate Resolution Imaging Spectroradiometer):**  
+   MODIS data is used to track temperature variations and heatwaves, as well as monitor vegetation health (NDVI), providing insights into plant growth and optimal harvest times.
+
+4. **ECOSTRESS (Ecosystem Spaceborne Thermal Radiometer Experiment on Space Station):**  
+   ECOSTRESS monitors plant water use and temperature stress, helping to optimize irrigation and prevent crop damage from extreme heat.
+
+5. **SWOT (Surface Water and Ocean Topography):**  
+   SWOT data helps monitor nearby water bodies and resources, ensuring efficient water use in irrigation systems.
+
+6. **Landsat:**  
+   Landsat imagery is used to track changes in land use, monitor water bodies, and assess drought and flood risks in agricultural areas.
+
+7. **SAR (Synthetic Aperture Radar):**  
+   SAR data helps detect surface changes related to soil moisture, flooding, and vegetation conditions, offering detailed insights into field conditions even under cloudy or dark conditions.
 
 ## References
 - **ViLT Architecture:**  
