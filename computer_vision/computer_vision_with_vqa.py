@@ -1,67 +1,78 @@
 !pip install transformers torch
 !pip install requests
 
-import json
 from transformers import ViltProcessor, ViltForQuestionAnswering
 from PIL import Image
 import torch
+import json
 
-# Hugging Face'den VQA modeli ve processor'ı yükleyelim
+# Load the VQA model and processor from Hugging Face
 model = ViltForQuestionAnswering.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
 processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
 
-# Görüntüyü dosya yolundan yükleme fonksiyonu
+# Function to load an image from the file path
 def load_image(image_path):
-    image = Image.open(image_path)
-    return image.convert("RGB")  # ViltProcessor RGB formatında çalıştığı için, görüntüyü RGB formatına dönüştürüyoruz.
+    try:
+        image = Image.open(image_path)
+        return image.convert("RGB")  # Convert the image to RGB since ViltProcessor works with RGB format.
+    except Exception as e:
+        print(f"Error loading image: {e}")
+        return None
 
-# Soru ve görüntüyü işleme ve cevap alma fonksiyonu
+# Function to process the question and image, and return an answer
 def get_answer_for_image_and_question(image_path, question):
-    # Görüntüyü yükleyelim
     image = load_image(image_path)
 
-    # Görüntü ve soruyu işleyelim
+    if image is None:
+        return "Image not found or cannot be loaded."
+
+    # Process the image and question
     inputs = processor(images=[image], text=question, return_tensors="pt")
 
-    # Modelden cevabı alalım
+    # Get the answer from the model
     with torch.no_grad():
         outputs = model(**inputs)
         logits = outputs.logits
         predicted_class = logits.argmax(-1).item()
 
-    # Cevabı dönelim
-    if predicted_class == 0:
+    # Return the answer
+    if predicted_class == 3:
         return "Yes"
-    elif predicted_class == 1:
+    elif predicted_class == 9:
         return "No"
     else:
         return "Unknown"
 
-# JSON dosyasını okuma fonksiyonu
+# Function to read the questions from a JSON file
 def load_questions_from_json(json_path):
-    with open(json_path, "r") as f:
-        data = json.load(f)
-    return data['questions']
+    try:
+        with open(json_path, "r") as f:
+            data = json.load(f)
+        return data['questions']
+    except Exception as e:
+        print(f"Error loading JSON file: {e}")
+        return None
 
-# Ana fonksiyon
+# Main function
 if __name__ == "__main__":
-    # Soruların bulunduğu JSON dosyasını yükleyelim
-    questions_file = "computer_vision/vqa_questions.json"  # Soruların bulunduğu JSON dosyasının adı 
-
-    # JSON dosyasından soruları ve görüntüleri okuyalım
+    # Load the JSON file containing the questions
+    questions_file = "/kaggle/input/adsfghj/vqa_questions.json"  # Path to the JSON file containing questions
     questions = load_questions_from_json(questions_file)
 
-    # Her kategorideki soruları görüntü ile eşleştirip cevap alalım
-    for category in questions:
-        for item in category["questions"]:  # Kategorilerdeki sorular listesine erişiyoruz
-            image_path = 'computer_vision/grasshopper.PNG'  # Tek bir resim dosyası kullanıyorsanız sabit atama yapılabilir
-            question = item["question"]
+    if questions is None:
+        print("Failed to load questions.")
+    else:
+        # Loop through each category and question, then pair it with an image to get the answer
+        for category in questions:
+            for item in category["questions"]:  # Access the list of questions in each category
+                image_path = '/kaggle/input/adsfghj/grasshopper.PNG'  # Use a fixed image path if only one image is used
+                question = item["question"]
 
-            # Sonucu alalım
-            answer = get_answer_for_image_and_question(image_path, question)
+                # Get the result
+                answer = get_answer_for_image_and_question(image_path, question)
 
-            # Sonucu yazdır
-            print(f"Category: {category['category']}")
-            print(f"Question: {question}")
-            print(f"Answer: {answer}")
-            print("-" * 30)
+                # Print the result
+                print(f"Category: {category['category']}")
+                print(f"Question: {question}")
+                print(f"Answer: {answer}")
+                print("-" * 30)
