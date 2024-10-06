@@ -1,5 +1,6 @@
 !pip install transformers torch
 !pip install requests
+# This is purely for demo purposes. The model needs to be improved to reflect more accurate values.
 
 from transformers import ViltProcessor, ViltForQuestionAnswering
 from PIL import Image
