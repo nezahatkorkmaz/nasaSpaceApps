@@ -58,7 +58,7 @@
       },
       {
         "name": "İstilacı Önleyici (Invasive Species Prevention)",
-        "evaluation": "İstilacıların varlığı her yarım saatte bir analiz edilir. İstilacı tespit edildiğinde, yalnızca istilacılar tarafından duyulabilen bir frekans yayarak istilacılardan korunma öner. Örneğin, çekirgeler varsa çekirgeleri uzaklaştıracak ses frekansı yay."
+        "evaluation": "Tarlada herhangi bir anomali tespit edilmesi durumunda ilgili konuma gidilir. Konuma gidildiğinde VQA ile sorular sorulur. Sorulan sorulardan 'Bölgede istilacı tespit edildi mi?' sorusunun cevabı 'Evet' ise istilacı tespit edildiğinde, yalnızca istilacılar tarafından duyulabilen bir frekans yayarak istilacılardan korunma öner. Örneğin, çekirgeler varsa çekirgeleri uzaklaştıracak ses frekansı yay."
       }
     ]
   }
